@@ -6,9 +6,9 @@ CONTAINER_NAME=mongodb
 ROOT_USER="root-user"
 ROOT_PASSWORD="root-password"
 
-#Key-Value Credentials
+# Key-Value Credentials
 KEY_VALUE_DB="Key-value-db"
-KEY_VLUE_USER="Key-value-user"
+KEY_VALUE_USER="Key-value-user"
 KEY_VALUE_PASSWORD="Key-value-password"
 
 docker run --rm -d --name $CONTAINER_NAME \
@@ -17,6 +17,6 @@ docker run --rm -d --name $CONTAINER_NAME \
     -e KEY_VALUE_DB=$KEY_VALUE_DB \
     -e KEY_VALUE_USER=$KEY_VALUE_USER \
     -e KEY_VALUE_PASSWORD=$KEY_VALUE_PASSWORD \
-    -v ./db-config/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro \
+    -v ./db-config/mongodb-init.js:/docker-entrypoint-initdb.d/mongodb-init.js:ro \
     $MONGODB_NAME:$MONGODB_TAG
     
