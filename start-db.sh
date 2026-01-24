@@ -12,13 +12,16 @@ KEY_VALUE_USER="Key-value-user"
 KEY_VALUE_PASSWORD="Key-value-password"
 
 # Connectivity
+source .env.network
 LOCALHOST_PORT=27017
 CONTAINER_PORT=27017
-NETWORK_NAME="key-value-net"
+
 
 # Storage
-VOLUME_NAME="key-value-data"
+source .env.volume
 VOLUME_CONTAINER_PATH=/data/db
+
+source setup.sh
 
 docker run --rm -d --name $CONTAINER_NAME \
     -e MONGODB_INITDB_ROOT_USERNAME=$ROOT_USER \
