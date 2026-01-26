@@ -1,6 +1,6 @@
 MONGODB_NAME="mongodb/mongodb-community-server"
 MONGODB_TAG="8.0-ubuntu2204"
-CONTAINER_NAME=mongodb
+source .env.db
 
 # Root Credentials
 ROOT_USER="root-user"
