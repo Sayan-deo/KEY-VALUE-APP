@@ -60,13 +60,24 @@ keyValueRouter.get('/:key', async (req, res) => {
 
 
 
-keyValueRouter.put('/:key', (req, res) => {
+keyValueRouter.put('/:key', async(req, res) => {
+
+    const { key } = req.params;
+    const { value } = req.body;
+
+    if (!value) {
+        return res.status(400).json({ error: 'Value is required' });
+    }
 
     try{
+        const updatedKeyValue = await KeyValue.findOneAndUpdate({ key }, { value }, { new: true });
+        if (!updatedKeyValue) {
+            return res.status(404).json({ error: 'Key not found' });
+        }
+        return res.status(200).json({ message: 'Key-Value pair updated successfully', key: updatedKeyValue.key, value: updatedKeyValue.value });
     } catch(err){
         res.status(500).json({message: 'Internal Server Error'});
-    }
-    return res.send('updating a key-value pair')
+    }  
 });    
 
 
@@ -78,9 +89,16 @@ keyValueRouter.put('/:key', (req, res) => {
 
 
 
-keyValueRouter.delete('/:key', (req, res) => {
+keyValueRouter.delete('/:key', async (req, res) => {
+
+    const { key } = req.params;
 
     try{
+        const deletedKeyValue = await KeyValue.findOneAndDelete({ key });
+        if (!deletedKeyValue) {
+            return res.status(404).json({ error: 'Key not found' });
+        }
+        return res.status(200).json({ message: 'Key-Value pair deleted successfully' });
     } catch(err){
         res.status(500).json({message: 'Internal Server Error'});
     }
